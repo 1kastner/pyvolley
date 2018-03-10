@@ -4,7 +4,7 @@ import math
 import cocos
 import pymunk
 
-import constants
+from . import constants
 
 __author__ = 'aikikode'
 
@@ -17,7 +17,7 @@ class Ball(object):
         self.body = pymunk.Body(mass, inertia)
         self.body.position = pos
         self.body.velocity_limit = constants.BALL_VELOCITY_LIMIT
-        self.body.apply_force(constants.BALL_ADDITIONAL_FORCE)
+        self.body.apply_impulse_at_local_point(constants.BALL_ADDITIONAL_FORCE)
         shape = pymunk.Circle(self.body, self.radius, (0, 0))
         shape.elasticity = 0.99
         shape.friction = 0.9
@@ -48,7 +48,7 @@ class Player(object):
         self.body = pymunk.Body(constants.PLAYER_MASS,
                                 pymunk.inf)  # use inf inertia to prevent player head from falling to the ground
         self.body.position = pos
-        self.body.apply_force(constants.PLAYER_ADDITIONAL_FORCE)
+        self.body.apply_impulse_at_local_point(constants.PLAYER_ADDITIONAL_FORCE)
         head_shape = pymunk.Circle(self.body, self.head_radius, (0, 45))
         head_shape.layers = 0b001  # use layers to prevent body and head collision
         head_shape.collision_type = 1
@@ -98,5 +98,4 @@ class Player(object):
     def reset(self, pos):
         self.body.position = pos
         self.body.velocity = ((0, 0))
-        self.body.reset_forces()
-        self.body.apply_force(constants.PLAYER_ADDITIONAL_FORCE)
+        self.body.apply_impulse_at_local_point(constants.PLAYER_ADDITIONAL_FORCE)
