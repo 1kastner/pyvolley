@@ -17,7 +17,7 @@ from . import constants
 from .gamectrl import GameCtrl
 from .hud import Hud
 from .models import Ball, Player
-
+from .aiinterface import AIInterface
 
 __author__ = 'aikikode'
 
@@ -279,8 +279,10 @@ def get_new_game():
     hud = Hud()
     end_game = EndGame()
     game_ctrl = GameCtrl(game, hud, end_game)
+    ai_interface = AIInterface(game)
     scene.add(game, z=0, name="game layer")
     scene.add(game_ctrl, z=1, name="game control layer")
     scene.add(hud, z=2, name="hud layer")
     scene.add(end_game, z=3, name="end game layer")
+    scene.add(ai_interface, z=4, name="ai")
     return scene
