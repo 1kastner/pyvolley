@@ -7,6 +7,10 @@ from . import constants
 __author__ = '1kastner'
 
 class AIInterface(Layer):
+    """
+    This wraps the game as good as possible so that we do not worry about this 
+    when creating the great AIs :)
+    """
     def __init__(self, game):
         super(AIInterface, self).__init__()
         self.bot_1 = Bot(
@@ -40,13 +44,12 @@ class AIInterface(Layer):
         pos_2 = self.game.players[1].body.position
         self.bot_1.update(pos_1, pos_2)
         self.bot_2.update(pos_2, pos_1)
-        #print("P1", self.player1.body.position)
-        #print("P2", self.player2.body.position)
-        #print("ball", self.ball.position)
-
 
 
 class Controller:
+    """
+    Stores the controller information for each bot and returns which action was performed
+    """
     def __init__(self, left_start, right_start, jump_start, left_end, right_end, jump_end):
         self.left_start = lambda : left_start() or "left"
         self.right_start = lambda : right_start() or "right"
@@ -55,7 +58,13 @@ class Controller:
         self.right_end = lambda : right_end() or "right"
         self.jump_end = lambda : jump_end() or "jump"
 
+
 class Bot:
+    """
+    Here we can put the AI stuff. By now it is quite stupid because it only performs random action
+    but by the provided knowledge it actually *could* do much smarter stuff. That is left for the next
+    commit.
+    """
     def __init__(self, ball, controller):
         self.ball = ball
         self.controller = controller
